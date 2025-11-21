@@ -207,6 +207,88 @@
             margin-top: 10px;
             font-style: italic;
         }
+
+        /* Chat Widget */
+        #chat-widget {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            max-width: 90vw;
+            height: 400px;
+            background-color: rgba(17, 34, 64, 0.95);
+            border: 1px solid var(--accent-cyan);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            z-index: 2000;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+        }
+
+        #chat-messages {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .message {
+            padding: 8px 12px;
+            border-radius: 8px;
+            max-width: 80%;
+            line-height: 1.4;
+            align-self: center;
+            text-align: center;
+        }
+
+        .message.user {
+            background-color: rgba(100, 255, 218, 0.2);
+            color: var(--text-primary);
+        }
+
+        .message.bot {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+
+        #chat-input-area {
+            padding: 10px;
+            border-top: 1px solid var(--text-secondary);
+            display: flex;
+            gap: 10px;
+        }
+
+        #chat-input {
+            flex-grow: 1;
+            background: rgba(10, 25, 47, 0.5);
+            border: 1px solid var(--text-secondary);
+            color: var(--text-primary);
+            padding: 8px;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+
+        #chat-send {
+            background: var(--accent-cyan);
+            color: var(--deep-blue);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .highlight-msg {
+            font-size: 0.8rem;
+            color: #ffd700;
+            font-style: italic;
+            margin-top: 2px;
+        }
     </style>
 </head>
 <body>
@@ -242,6 +324,17 @@
 
     <div id="map-container">
         <!-- Map canvas will be injected here by DeckGL -->
+    </div>
+
+    <!-- Chat Widget -->
+    <div id="chat-widget">
+        <div id="chat-messages">
+            <div class="message bot">Hello! I can help you explore the map. Try asking "Highlight the top 5 richest tiles".</div>
+        </div>
+        <div id="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Ask a query..." autocomplete="off">
+            <button id="chat-send">Send</button>
+        </div>
     </div>
 
     <!-- Scripts -->
