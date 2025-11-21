@@ -1,0 +1,72 @@
+{
+  "grid": {
+    "rows": 50,
+    "cols": 50,
+    "cell_km": 1.0
+  },
+  "origin": {
+    "lat": -12.34,
+    "lon": 145.67
+  },
+  "seed": 42,
+  "units": {
+    "depth": "m",
+    "pressure": "atm",
+    "speed": "m/s"
+  },
+  "biomes": [
+    "slope",
+    "seamount",
+    "plain",
+    "trench",
+    "hydrothermal"
+  ],
+  "hazard_types": [
+    "thermal_vent",
+    "acidic_zone",
+    "trench_wall",
+    "methane_leak"
+  ],
+  "species_list": [
+    "Abyssal_Ray",
+    "Crimson_Jelly",
+    "Giant_Isopod",
+    "Blue_Siphonophore",
+    "Glass_Squid",
+    "Hydro_Vent_Shrimp",
+    "Specter_Whale",
+    "Abyssal_Plant"
+  ],
+  "resource_families": {
+    "Manganese_Nodule": [
+      "Nickel_Rich_Nodule",
+      "Copper_Nodule"
+    ],
+    "Methane_Hydrate": [
+      "Methane_Ice"
+    ],
+    "Cobalt_Rich_Crust": [
+      "Platinum_Crust",
+      "RareEarth_Crust"
+    ],
+    "Phosphorite": [
+      "Shallow_Phosphate",
+      "Deep_Phosphate"
+    ],
+    "Biogenic_Sediment": [
+      "Carbon_Rich_Sediment"
+    ],
+    "Neuralite": [
+      "Neuralite"
+    ]
+  },
+  "temperature_range_c": [
+    1.9061804782499916,
+    13.685533925949848
+  ],
+  "pressure_range_atm": [
+    76.52645095411201,
+    680.6116504854368
+  ],
+  "about": "The Abyssal World is a 50x50 km deep-sea environment for WEC 2025 Programming Challenge. Fictional elements are rare and marked."
+}

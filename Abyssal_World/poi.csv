@@ -1,0 +1,53 @@
+id,row,col,category,label,description,research_value
+WRECK_001,2,0,archaeology,Sunken Freighter,Twentieth-century cargo hull resting on slope.,88
+WRECK_002,0,0,archaeology,Sunken Freighter,Twentieth-century cargo hull resting on slope.,79
+WRECK_003,5,1,archaeology,Sunken Freighter,Twentieth-century cargo hull resting on slope.,65
+WRECK_004,0,4,archaeology,Sunken Freighter,Twentieth-century cargo hull resting on slope.,64
+WRECK_005,5,7,archaeology,Sunken Freighter,Twentieth-century cargo hull resting on slope.,90
+WRECK_006,1,8,archaeology,Sunken Freighter,Twentieth-century cargo hull resting on slope.,73
+WRECK_007,1,0,archaeology,Sunken Freighter,Twentieth-century cargo hull resting on slope.,94
+WRECK_008,3,2,archaeology,Sunken Freighter,Twentieth-century cargo hull resting on slope.,67
+WRECK_009,4,7,archaeology,Sunken Freighter,Twentieth-century cargo hull resting on slope.,82
+WRECK_010,1,2,archaeology,Sunken Freighter,Twentieth-century cargo hull resting on slope.,60
+WRECK_011,3,0,archaeology,Sunken Freighter,Twentieth-century cargo hull resting on slope.,86
+WRECK_012,0,11,archaeology,Sunken Freighter,Twentieth-century cargo hull resting on slope.,90
+WRECK_013,6,7,archaeology,Sunken Freighter,Twentieth-century cargo hull resting on slope.,78
+WRECK_014,0,7,archaeology,Sunken Freighter,Twentieth-century cargo hull resting on slope.,84
+WRECK_015,5,5,archaeology,Sunken Freighter,Twentieth-century cargo hull resting on slope.,81
+WRECK_016,2,8,archaeology,Sunken Freighter,Twentieth-century cargo hull resting on slope.,77
+WRECK_017,6,1,archaeology,Sunken Freighter,Twentieth-century cargo hull resting on slope.,89
+WRECK_018,3,4,archaeology,Sunken Freighter,Twentieth-century cargo hull resting on slope.,86
+WRECK_019,6,0,archaeology,Sunken Freighter,Twentieth-century cargo hull resting on slope.,91
+WRECK_020,4,3,archaeology,Sunken Freighter,Twentieth-century cargo hull resting on slope.,68
+WRECK_021,1,6,archaeology,Sunken Freighter,Twentieth-century cargo hull resting on slope.,71
+WRECK_022,3,3,archaeology,Sunken Freighter,Twentieth-century cargo hull resting on slope.,63
+WRECK_023,4,5,archaeology,Sunken Freighter,Twentieth-century cargo hull resting on slope.,87
+WRECK_024,2,6,archaeology,Sunken Freighter,Twentieth-century cargo hull resting on slope.,73
+WRECK_025,0,9,archaeology,Sunken Freighter,Twentieth-century cargo hull resting on slope.,60
+VENT_026,26,11,geology,Black Smoker Field,Cluster of active hydrothermal chimneys.,99
+VENT_027,27,12,geology,Black Smoker Field,Cluster of active hydrothermal chimneys.,73
+VENT_028,26,13,geology,Black Smoker Field,Cluster of active hydrothermal chimneys.,98
+VENT_029,18,4,geology,Black Smoker Field,Cluster of active hydrothermal chimneys.,78
+VENT_030,27,8,geology,Black Smoker Field,Cluster of active hydrothermal chimneys.,88
+REEF_031,3,5,biology,Reef Sanctuary,High biodiversity coral zone.,74
+REEF_032,0,9,biology,Reef Sanctuary,High biodiversity coral zone.,74
+REEF_033,3,6,biology,Reef Sanctuary,High biodiversity coral zone.,66
+REEF_034,1,5,biology,Reef Sanctuary,High biodiversity coral zone.,73
+REEF_035,2,0,biology,Reef Sanctuary,High biodiversity coral zone.,86
+REEF_036,7,0,biology,Reef Sanctuary,High biodiversity coral zone.,69
+REEF_037,5,1,biology,Reef Sanctuary,High biodiversity coral zone.,76
+REEF_038,2,7,biology,Reef Sanctuary,High biodiversity coral zone.,87
+REEF_039,5,6,biology,Reef Sanctuary,High biodiversity coral zone.,72
+REEF_040,1,4,biology,Reef Sanctuary,High biodiversity coral zone.,89
+REEF_041,8,12,biology,Reef Sanctuary,High biodiversity coral zone.,83
+REEF_042,0,7,biology,Reef Sanctuary,High biodiversity coral zone.,78
+REEF_043,3,7,biology,Reef Sanctuary,High biodiversity coral zone.,81
+REEF_044,4,0,biology,Reef Sanctuary,High biodiversity coral zone.,82
+REEF_045,1,0,biology,Reef Sanctuary,High biodiversity coral zone.,82
+REEF_046,1,10,biology,Reef Sanctuary,High biodiversity coral zone.,67
+REEF_047,0,10,biology,Reef Sanctuary,High biodiversity coral zone.,69
+REEF_048,0,8,biology,Reef Sanctuary,High biodiversity coral zone.,87
+REEF_049,6,1,biology,Reef Sanctuary,High biodiversity coral zone.,69
+REEF_050,2,8,biology,Reef Sanctuary,High biodiversity coral zone.,81
+METH_051,9,2,energy,Hydrate Field,Cluster of methane hydrate deposits.,74
+METH_052,18,1,energy,Hydrate Field,Cluster of methane hydrate deposits.,75

@@ -1,0 +1,7 @@
+predator,prey,interaction_strength,biome_overlap
+Specter_Whale,Abyssal_Ray,0.9,trench
+Specter_Whale,Glass_Squid,0.7,trench
+Crimson_Jelly,Glass_Squid,0.6,deep
+Crimson_Jelly,Blue_Siphonophore,0.5,midwater
+Giant_Isopod,Abyssal_Plant,0.4,slope
+Hydro_Vent_Shrimp,Abyssal_Plant,0.3,hydrothermal
