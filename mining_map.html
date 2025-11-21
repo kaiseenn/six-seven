@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Abyssal Mining Map</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+        body { margin: 0; padding: 0; }
+        #map { width: 100%; height: 100vh; }
+        .info { padding: 6px 8px; font: 14px/16px Arial, Helvetica, sans-serif; background: white; background: rgba(255,255,255,0.8); box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+        var map = L.map('map').setView([-12.34, 146.011216592288], 10);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        var markers = [];
+
+        var marker = L.circleMarker([-12.34, 146.011216592288], {
+            color: 'green',
+            fillColor: 'green',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 1</b><br>Score: 85238.18<br>Biome: seamount<br>Depth: 3059.1575986022312m<br>Value: 85243.17<br>Hazards: 0.00<br>Loc: (0, 37)");
+
+        var marker = L.circleMarker([-12.394054054054054, 145.9097738216078], {
+            color: 'green',
+            fillColor: 'green',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 2</b><br>Score: 84829.43<br>Biome: seamount<br>Depth: 2727.860835545399m<br>Value: 84837.40<br>Hazards: 0.00<br>Loc: (6, 26)");
+
+        var marker = L.circleMarker([-12.466126126126126, 145.88210761142227], {
+            color: 'green',
+            fillColor: 'green',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 3</b><br>Score: 69132.51<br>Biome: seamount<br>Depth: 3128.882430076913m<br>Value: 69136.13<br>Hazards: 0.00<br>Loc: (14, 23)");
+
+        var marker = L.circleMarker([-12.655315315315317, 145.9835503821025], {
+            color: 'green',
+            fillColor: 'green',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 4</b><br>Score: 67001.50<br>Biome: plain<br>Depth: 5032.283524539338m<br>Value: 67053.83<br>Hazards: 0.00<br>Loc: (35, 34)");
+
+        var marker = L.circleMarker([-12.34900900900901, 145.88210761142227], {
+            color: 'green',
+            fillColor: 'green',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 5</b><br>Score: 66436.10<br>Biome: seamount<br>Depth: 2423.5653695751357m<br>Value: 66441.33<br>Hazards: 0.00<br>Loc: (1, 23)");
+
+        var marker = L.circleMarker([-12.745405405405403, 146.02043866234985], {
+            color: 'green',
+            fillColor: 'green',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 6</b><br>Score: 64806.17<br>Biome: plain<br>Depth: 5825.103980148879m<br>Value: 64809.20<br>Hazards: 0.00<br>Loc: (45, 38)");
+
+        var marker = L.circleMarker([-12.69135135135135, 146.03888280247352], {
+            color: 'green',
+            fillColor: 'green',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 7</b><br>Score: 62512.22<br>Biome: plain<br>Depth: 5662.43190771052m<br>Value: 62514.98<br>Hazards: 0.00<br>Loc: (39, 40)");
+
+        var marker = L.circleMarker([-12.71837837837838, 145.82677519105124], {
+            color: 'green',
+            fillColor: 'green',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 8</b><br>Score: 58543.57<br>Biome: plain<br>Depth: 4334.857819422293m<br>Value: 58546.40<br>Hazards: 0.00<br>Loc: (42, 17)");
+
+        var marker = L.circleMarker([-12.61027027027027, 145.91899589166962], {
+            color: 'green',
+            fillColor: 'green',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 9</b><br>Score: 57937.50<br>Biome: plain<br>Depth: 4366.857344257991m<br>Value: 57943.25<br>Hazards: 0.00<br>Loc: (30, 27)");
+
+        var marker = L.circleMarker([-12.583243243243244, 145.7898869108039], {
+            color: 'green',
+            fillColor: 'green',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 10</b><br>Score: 57327.85<br>Biome: seamount<br>Depth: 3354.2044712880324m<br>Value: 57331.83<br>Hazards: 0.00<br>Loc: (27, 13)");
+
+        var marker = L.circleMarker([-12.664324324324324, 145.67922207006183], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 11</b><br>Score: 56663.58<br>Biome: seamount<br>Depth: 3106.5698264524876m<br>Value: 56667.19<br>Hazards: 0.00<br>Loc: (36, 1)");
+
+        var marker = L.circleMarker([-12.637297297297296, 145.70688828024734], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 12</b><br>Score: 55299.07<br>Biome: seamount<br>Depth: 3106.5774018406405m<br>Value: 55304.32<br>Hazards: 0.00<br>Loc: (33, 4)");
+
+        var marker = L.circleMarker([-12.52918918918919, 145.82677519105124], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 13</b><br>Score: 53797.70<br>Biome: seamount<br>Depth: 3248.5335005403435m<br>Value: 53802.45<br>Hazards: 0.00<br>Loc: (21, 17)");
+
+        var marker = L.circleMarker([-12.736396396396396, 146.02966073241168], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 14</b><br>Score: 49968.59<br>Biome: plain<br>Depth: 5307.545613186674m<br>Value: 49973.54<br>Hazards: 0.00<br>Loc: (44, 39)");
+
+        var marker = L.circleMarker([-12.52018018018018, 146.011216592288], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 15</b><br>Score: 49229.07<br>Biome: plain<br>Depth: 4384.736081479375m<br>Value: 49324.24<br>Hazards: 0.00<br>Loc: (20, 37)");
+
+        var marker = L.circleMarker([-12.52918918918919, 146.1034372929064], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 16</b><br>Score: 48377.80<br>Biome: plain<br>Depth: 5068.3328754803715m<br>Value: 48380.19<br>Hazards: 0.00<br>Loc: (21, 47)");
+
+        var marker = L.circleMarker([-12.448108108108109, 145.87288554136043], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 17</b><br>Score: 47049.07<br>Biome: seamount<br>Depth: 3019.8311870695406m<br>Value: 47054.04<br>Hazards: 0.00<br>Loc: (12, 22)");
+
+        var marker = L.circleMarker([-12.50216216216216, 146.06654901265904], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 18</b><br>Score: 46899.38<br>Biome: plain<br>Depth: 4593.579991892598m<br>Value: 46902.25<br>Hazards: 0.00<br>Loc: (18, 43)");
+
+        var marker = L.circleMarker([-12.547207207207206, 146.0573269425972], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 19</b><br>Score: 45286.49<br>Biome: plain<br>Depth: 4840.271840264807m<br>Value: 45337.53<br>Hazards: 0.00<br>Loc: (23, 42)");
+
+        var marker = L.circleMarker([-12.42108108108108, 145.76222070061837], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 20</b><br>Score: 45062.18<br>Biome: seamount<br>Depth: 2063.1643483608564m<br>Value: 45066.14<br>Hazards: 0.00<br>Loc: (9, 10)");
+
+        var marker = L.circleMarker([-12.412072072072071, 145.67922207006183], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 21</b><br>Score: 43989.91<br>Biome: seamount<br>Depth: 2272.3230424260014m<br>Value: 43993.86<br>Hazards: 0.00<br>Loc: (8, 1)");
+
+        var marker = L.circleMarker([-12.394054054054054, 145.95588417191698], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 22</b><br>Score: 42752.37<br>Biome: seamount<br>Depth: 3184.251070418583m<br>Value: 42757.75<br>Hazards: 0.00<br>Loc: (6, 31)");
+
+        var marker = L.circleMarker([-12.565225225225223, 145.9374400317933], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 23</b><br>Score: 42575.61<br>Biome: plain<br>Depth: 4283.072388258021m<br>Value: 42582.78<br>Hazards: 0.00<br>Loc: (25, 29)");
+
+        var marker = L.circleMarker([-12.60126126126126, 146.03888280247352], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 24</b><br>Score: 41366.19<br>Biome: plain<br>Depth: 5130.861594938164m<br>Value: 41369.77<br>Hazards: 0.00<br>Loc: (29, 40)");
+
+        var marker = L.circleMarker([-12.50216216216216, 145.7437765604947], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 25</b><br>Score: 40942.98<br>Biome: seamount<br>Depth: 2445.346377841596m<br>Value: 40946.72<br>Hazards: 0.00<br>Loc: (18, 8)");
+
+        var marker = L.circleMarker([-12.68234234234234, 145.90055175154595], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 26</b><br>Score: 38834.15<br>Biome: plain<br>Depth: 4586.305447943831m<br>Value: 38897.11<br>Hazards: 0.00<br>Loc: (38, 25)");
+
+        var marker = L.circleMarker([-12.574234234234234, 146.06654901265904], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 27</b><br>Score: 38359.82<br>Biome: plain<br>Depth: 5162.148306150429m<br>Value: 38362.79<br>Hazards: 0.00<br>Loc: (26, 43)");
+
+        var marker = L.circleMarker([-12.4390990990991, 145.92821796173146], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 28</b><br>Score: 38201.75<br>Biome: seamount<br>Depth: 3429.1232378519867m<br>Value: 38206.78<br>Hazards: 0.00<br>Loc: (11, 28)");
+
+        var marker = L.circleMarker([-12.376036036036036, 145.67922207006183], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 29</b><br>Score: 37891.90<br>Biome: slope<br>Depth: 1263.5332706215977m<br>Value: 37933.38<br>Hazards: 0.00<br>Loc: (4, 1)");
+
+        var marker = L.circleMarker([-12.646306306306306, 146.09421522284455], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 30</b><br>Score: 37735.20<br>Biome: plain<br>Depth: 5814.692316325586m<br>Value: 37740.27<br>Hazards: 0.00<br>Loc: (34, 46)");
+
+        var marker = L.circleMarker([-12.628288288288289, 145.72533242037102], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 31</b><br>Score: 37602.55<br>Biome: plain<br>Depth: 4116.819113491962m<br>Value: 37605.87<br>Hazards: 0.00<br>Loc: (32, 6)");
+
+        var marker = L.circleMarker([-12.592252252252251, 145.72533242037102], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 32</b><br>Score: 37451.02<br>Biome: seamount<br>Depth: 2990.705627351785m<br>Value: 37456.49<br>Hazards: 0.00<br>Loc: (28, 6)");
+
+        var marker = L.circleMarker([-12.475135135135137, 146.02966073241168], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 33</b><br>Score: 37230.52<br>Biome: plain<br>Depth: 4188.448872956479m<br>Value: 37233.23<br>Hazards: 0.00<br>Loc: (15, 39)");
+
+        var marker = L.circleMarker([-12.484144144144144, 145.85444140123676], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 34</b><br>Score: 37162.23<br>Biome: seamount<br>Depth: 3049.2307884517727m<br>Value: 37167.78<br>Hazards: 0.00<br>Loc: (16, 20)");
+
+        var marker = L.circleMarker([-12.583243243243244, 145.72533242037102], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 35</b><br>Score: 37003.24<br>Biome: seamount<br>Depth: 2998.0304448661427m<br>Value: 37007.67<br>Hazards: 0.00<br>Loc: (27, 6)");
+
+        var marker = L.circleMarker([-12.448108108108109, 146.02043866234985], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 36</b><br>Score: 36942.60<br>Biome: plain<br>Depth: 3851.032533181985m<br>Value: 36945.49<br>Hazards: 0.00<br>Loc: (12, 38)");
+
+        var marker = L.circleMarker([-12.61927927927928, 145.9097738216078], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 37</b><br>Score: 36844.98<br>Biome: plain<br>Depth: 4426.792959982069m<br>Value: 36847.99<br>Hazards: 0.00<br>Loc: (31, 26)");
+
+        var marker = L.circleMarker([-12.5381981981982, 146.04810487253536], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 38</b><br>Score: 36574.86<br>Biome: plain<br>Depth: 4609.653839452212m<br>Value: 36577.71<br>Hazards: 0.00<br>Loc: (22, 41)");
+
+        var marker = L.circleMarker([-12.61027027027027, 145.70688828024734], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 39</b><br>Score: 36370.33<br>Biome: seamount<br>Depth: 2843.6579975748828m<br>Value: 36379.01<br>Hazards: 0.00<br>Loc: (30, 4)");
+
+        var marker = L.circleMarker([-12.403063063063064, 145.88210761142227], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 40</b><br>Score: 35811.84<br>Biome: seamount<br>Depth: 2521.4086859898753m<br>Value: 35817.19<br>Hazards: 0.00<br>Loc: (7, 23)");
+
+        var marker = L.circleMarker([-12.673333333333334, 145.9835503821025], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 41</b><br>Score: 35262.46<br>Biome: plain<br>Depth: 5246.978559726321m<br>Value: 35265.47<br>Hazards: 0.00<br>Loc: (37, 34)");
+
+        var marker = L.circleMarker([-12.475135135135137, 145.75299863055653], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 42</b><br>Score: 34938.02<br>Biome: seamount<br>Depth: 2235.4990835795975m<br>Value: 34941.84<br>Hazards: 0.00<br>Loc: (15, 9)");
+
+        var marker = L.circleMarker([-12.655315315315317, 145.7437765604947], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 43</b><br>Score: 34291.20<br>Biome: plain<br>Depth: 3635.472909793918m<br>Value: 34296.57<br>Hazards: 0.00<br>Loc: (35, 8)");
+
+        var marker = L.circleMarker([-12.664324324324324, 146.011216592288], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 44</b><br>Score: 34018.79<br>Biome: plain<br>Depth: 5477.283116801041m<br>Value: 34069.99<br>Hazards: 0.00<br>Loc: (36, 37)");
+
+        var marker = L.circleMarker([-12.42108108108108, 145.73455449043286], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 45</b><br>Score: 33913.09<br>Biome: seamount<br>Depth: 1666.5204979124103m<br>Value: 33918.16<br>Hazards: 0.00<br>Loc: (9, 7)");
+
+        var marker = L.circleMarker([-12.412072072072071, 145.9835503821025], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 46</b><br>Score: 33554.64<br>Biome: seamount<br>Depth: 3277.8105530865573m<br>Value: 33558.48<br>Hazards: 0.00<br>Loc: (8, 34)");
+
+        var marker = L.circleMarker([-12.385045045045045, 146.02043866234985], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 47</b><br>Score: 33103.20<br>Biome: plain<br>Depth: 3539.871373836496m<br>Value: 33106.43<br>Hazards: 0.00<br>Loc: (5, 38)");
+
+        var marker = L.circleMarker([-12.484144144144144, 146.07577108272088], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 48</b><br>Score: 32436.76<br>Biome: plain<br>Depth: 4553.850108488869m<br>Value: 32442.25<br>Hazards: 0.00<br>Loc: (16, 44)");
+
+        var marker = L.circleMarker([-12.376036036036036, 145.75299863055653], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 49</b><br>Score: 32293.39<br>Biome: seamount<br>Depth: 1636.022563744322m<br>Value: 32298.16<br>Hazards: 0.00<br>Loc: (4, 9)");
+
+        var marker = L.circleMarker([-12.71837837837838, 145.67], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            radius: 8
+        }).addTo(map);
+        marker.bindPopup("<b>Rank: 50</b><br>Score: 32269.13<br>Biome: plain<br>Depth: 3584.834603343787m<br>Value: 32271.49<br>Hazards: 0.00<br>Loc: (42, 0)");
+
+    </script>
+</body>
+</html>
