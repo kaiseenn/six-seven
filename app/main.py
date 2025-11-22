@@ -46,7 +46,7 @@ if not GOOGLE_API_KEY:
 
 def initialize_agent():
     model = ChatGoogleGenerativeAI(
-        model="gemini-2.5-flash",
+        model="gemini-2.5-flash-preview-09-2025",
         google_api_key=GOOGLE_API_KEY,
         thinking_budget=-1,
     )

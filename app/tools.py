@@ -42,22 +42,26 @@ for col in list_columns:
         DF[col] = DF[col].apply(safe_parse_list)
 
 class HighlightTilesInput(BaseModel):
-    tiles: List[Dict[str, int]] = Field(..., description="List of row/col dictionaries, e.g. [{'row': 1, 'col': 2}, ...]")
+    tiles: List[Dict[str, Any]] = Field(..., description="List of row/col dictionaries, optionally with color e.g. [{'row': 1, 'col': 2, 'color': [255, 0, 0]}, ...]")
 
 @tool("highlight_tiles")
-def highlight_tiles(tiles: List[Dict[str, int]]):
+def highlight_tiles(tiles: List[Dict[str, Any]]):
     """
     Call this tool to highlight specific tiles on the user's map.
     Input should be a list of dictionaries, each with BOTH 'row' AND 'col' keys.
-    Example: [{'row': 10, 'col': 5}, {'row': 2, 'col': 3}]
+    Optional: 'color' key with [r, g, b] or [r, g, b, a] values (0-255).
+    Example: [{'row': 10, 'col': 5}, {'row': 2, 'col': 3, 'color': [255, 0, 0]}]
     
-    IMPORTANT: Each tile MUST have both 'row' and 'col' keys, otherwise it will highlight incorrectly.
+    IMPORTANT: Each tile MUST have both 'row' and 'col' keys.
     """
     # Validate that each tile has both row and col
     validated_tiles = []
     for tile in tiles:
         if 'row' in tile and 'col' in tile:
-            validated_tiles.append({'row': int(tile['row']), 'col': int(tile['col'])})
+            t = {'row': int(tile['row']), 'col': int(tile['col'])}
+            if 'color' in tile:
+                t['color'] = tile['color']
+            validated_tiles.append(t)
         else:
             print(f"Warning: Skipping invalid tile (missing row or col): {tile}")
     
@@ -113,7 +117,8 @@ def query_and_highlight(code: str):
     
     You MUST assign the final result to a variable named 'result_rows'.
     'result_rows' MUST be a list of dictionaries with BOTH 'row' AND 'col' keys.
-    Example: [{'row': 1, 'col': 2}, {'row': 3, 'col': 4}]
+    Optionally include 'color' key: [r, g, b] or [r, g, b, a].
+    Example: [{'row': 1, 'col': 2, 'color': [255,0,0]}, {'row': 3, 'col': 4}]
     
     The tiles will be AUTOMATICALLY highlighted. You only need to return the row/col pairs.
     
@@ -149,7 +154,10 @@ def query_and_highlight(code: str):
         for tile in result_rows:
             if isinstance(tile, dict) and 'row' in tile and 'col' in tile:
                 try:
-                    validated_tiles.append({'row': int(tile['row']), 'col': int(tile['col'])})
+                    t = {'row': int(tile['row']), 'col': int(tile['col'])}
+                    if 'color' in tile:
+                        t['color'] = tile['color']
+                    validated_tiles.append(t)
                 except (ValueError, TypeError):
                     pass
         

@@ -139,8 +139,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (selectedCell && d.row === selectedCell.row && d.col === selectedCell.col) {
                     return [0, 255, 0]; // Bright green outline
                 }
-                if (isHighlighted(d)) {
-                    return [0, 255, 0]; // Bright green outline
+                const highlightMatch = highlightedCells.find(h => h.row === d.row && h.col === d.col);
+                if (highlightMatch) {
+                    // Use custom color if provided, else default bright green
+                    return highlightMatch.color ? highlightMatch.color : [0, 255, 0]; 
                 }
                 return [0, 0, 0];
             },
@@ -191,8 +193,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 return [0, 255, 0, 255]; // Bright Green
             }
             // If we have highlights active, check those too
-            if (isHighlighted(d)) {
-                return [0, 255, 0, 255]; // Bright Green
+            const highlightMatch = highlightedCells.find(h => h.row === d.row && h.col === d.col);
+            if (highlightMatch) {
+                // Use custom color if provided, else default bright green
+                return highlightMatch.color ? highlightMatch.color : [0, 255, 0, 255];
             }
             // Otherwise dim
             const baseColor = currentViewMode === 'biome' 
@@ -203,8 +207,10 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // 2. AI Highlight Priority (No user selection)
         if (highlightedCells.length > 0) {
-            if (isHighlighted(d)) {
-                return [0, 255, 0, 255]; // Bright Green
+            const highlightMatch = highlightedCells.find(h => h.row === d.row && h.col === d.col);
+            if (highlightMatch) {
+                // Use custom color if provided, else default bright green
+                return highlightMatch.color ? highlightMatch.color : [0, 255, 0, 255];
             }
             // Dim non-highlighted
             const baseColor = currentViewMode === 'biome' 
