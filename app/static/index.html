@@ -18,28 +18,36 @@
     </div>
 
     <div id="sidebar" class="glass-panel">
+        <h1>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path><path d="M2 12h20"></path></svg>
+            Abyssal 3D
+        </h1>
         
         <div class="toggle-group">
             <button class="toggle-btn active" id="btn-biome">Biome View</button>
             <button class="toggle-btn" id="btn-score">Mining Score</button>
         </div>
         
-        <button id="clear-highlights-btn" class="action-btn danger">Clear Highlights</button>
-
         <div id="cell-info" style="margin-top: 20px;">
             <div class="stat-box">
                 <p class="stat-label" style="text-align: center; margin: 0;">Hover over a cell to view details.<br>Click to lock details.</p>
             </div>
         </div>
-        
-        <div class="controls" style="margin-top: auto; padding-top: 20px;">
-            <div class="instruction">
-                <strong>Controls:</strong><br>
-                • Left Click + Drag to Rotate<br>
-                • Right Click + Drag to Pan<br>
-                • Scroll to Zoom
-            </div>
+    </div>
+
+    <div id="controls-panel" class="glass-panel transparent-panel">
+        <div class="instruction">
+            <strong>Controls:</strong><br>
+            • Left Click + Drag to Rotate<br>
+            • Right Click + Drag to Pan<br>
+            • Scroll to Zoom
         </div>
+    </div>
+
+    <div id="actions-panel" class="glass-panel transparent-panel">
+        <button id="clear-highlights-btn" class="action-btn danger">Clear Selected</button>
+        <button id="export-btn" class="action-btn" style="margin-top: 0;">Export Selected to CSV</button>
+        
     </div>
 
     <!-- Chat Widget -->

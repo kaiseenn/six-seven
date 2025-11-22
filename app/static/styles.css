@@ -93,11 +93,35 @@ h2 {
 .instruction {
     font-size: 0.8rem;
     color: var(--text-secondary);
-    background: rgba(0,0,0,0.3);
     padding: 12px;
-    border-radius: 8px;
-    border-left: 3px solid var(--accent-cyan);
     line-height: 1.5;
+}
+
+/* Controls Panel */
+#controls-panel {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+}
+
+/* Actions Panel */
+#actions-panel {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 220px; /* Slightly wider for buttons */
+    padding: 10px; /* Less padding to be compact */
+    z-index: 30; /* Higher z-index to stay on top if needed */
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.transparent-panel {
+    background: rgba(17, 34, 64, 0.4); /* Semi-transparent */
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(100, 255, 218, 0.1);
 }
 
 /* Buttons */
@@ -206,12 +230,16 @@ h2 {
 #chat-widget {
     position: absolute;
     bottom: 20px;
-    /* Sidebar width (340px) + Sidebar left margin (20px) = 360px.
-       Center of remaining space = 360px + (100vw - 360px) / 2 */
-    left: calc(360px + (100vw - 360px) / 2);
+    /* Sidebar (340+20) = 360px. Actions Panel (~240+20) = 260px.
+       Center available space: left: 360px, right: 260px.
+       Total width = 100vw.
+       Available width = 100vw - 360 - 260.
+       Center point = 360 + (Available width / 2).
+    */
+    left: calc(360px + (100vw - 620px) / 2);
     transform: translateX(-50%);
-    width: 700px;
-    max-width: calc(100vw - 400px);
+    width: 600px; /* Slightly smaller width */
+    max-width: calc(100vw - 700px); /* Ensure it doesn't hit panels */
     height: 200px;
     display: flex;
     flex-direction: column;
@@ -326,4 +354,3 @@ h2 {
     padding: 10px !important;
     border-radius: 6px !important;
 }
-

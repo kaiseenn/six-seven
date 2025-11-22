@@ -76,6 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
             setupSearch();
             console.log('Setting up chat...');
             setupChat();
+            console.log('Setting up export...');
+            setupExport();
             console.log('Initialization complete!');
         })
         .catch(err => {
@@ -100,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
             getTooltip: ({object}) => object && {
                 html: `
                     <div><b>${currentViewMode === 'score' ? 'Score: ' + object.score.toFixed(0) : object.biome.toUpperCase()}</b></div>
-                    <div>Depth: ${object.depth}m</div>
+                    <div>Depth: ${Math.trunc(object.depth)}m</div>
                     <div>(${object.row}, ${object.col})</div>
                 `,
                 style: {
@@ -346,6 +348,97 @@ document.addEventListener('DOMContentLoaded', () => {
         window.searchTile = doSearch;
     }
 
+    function setupExport() {
+        const exportBtn = document.getElementById('export-btn');
+        
+        if (!exportBtn) return;
+        
+        exportBtn.addEventListener('click', () => {
+            if (!highlightedCells || highlightedCells.length === 0) {
+                alert('No tiles currently selected to export.');
+                return;
+            }
+            
+            // Find the full data objects for highlighted cells
+            const exportData = [];
+            for (const h of highlightedCells) {
+                const match = allData.find(d => d.row === h.row && d.col === h.col);
+                if (match && match.full_data) {
+                    exportData.push(match.full_data);
+                }
+            }
+            
+            if (exportData.length === 0) {
+                alert('No data found for selected tiles.');
+                return;
+            }
+            
+            // Convert to CSV
+            // Get all unique keys from the full data (some rows might be missing columns)
+            // However, for a grid, usually keys are consistent. We use keys from the first full data object
+            // or better, use a master list if we want to guarantee all columns. 
+            // Let's assume allData has consistent schema or at least the first object is representative.
+            // To be safe, we can union all keys from all rows if schema varies, but that's expensive.
+            // Given the CSV origin, keys should be consistent.
+            
+            // Wait, the user asked for ALL columns even if empty.
+            // The issue might be that `exportData[0]` might not have keys for empty values if they were dropped during processing?
+            // In our Python `get_grid`, we do `full_data[k] = v` for all columns in CSV.
+            // So `full_data` should already contain all columns from the CSV, even if values are empty strings.
+            
+            if (exportData.length === 0) return;
+
+            // Hardcoded list of columns from merged.csv to ensure completeness
+            const allKeys = [
+                'row', 'col', 'x_km', 'y_km', 'lat', 'lon', 'depth_m', 'pressure_atm', 'biome', 
+                'temperature_c', 'light_intensity', 'terrain_roughness', 
+                'coral_coral_cover_pct', 'coral_health_index', 'coral_bleaching_risk', 'coral_biodiversity_index', 
+                'current_u_mps', 'current_v_mps', 'current_speed_mps', 'current_stability', 'current_flow_direction', 
+                'hazard_type', 'hazard_severity', 'hazard_notes', 
+                'life_species', 'life_avg_depth_m', 'life_density', 'life_threat_level', 'life_behavior', 'life_trophic_level', 'life_prey_species', 
+                'poi_id', 'poi_category', 'poi_label', 'poi_description', 'poi_research_value', 
+                'resource_type', 'resource_family', 'resource_abundance', 'resource_purity', 'resource_extraction_difficulty', 'resource_environmental_impact', 'resource_economic_value', 'resource_description', 
+                'biome_predators', 'biome_prey', 'biome_interaction_strengths'
+            ];
+            
+            const keys = allKeys;
+            
+            const csvRows = [];
+            
+            // Header
+            csvRows.push(keys.join(','));
+            
+            // Rows
+            for (const row of exportData) {
+                const values = keys.map(key => {
+                    const val = row[key];
+                    // Handle strings with commas, quotes, or newlines
+                    const strVal = String(val === null || val === undefined ? '' : val);
+                    if (strVal.includes(',') || strVal.includes('"') || strVal.includes('\n')) {
+                        return `"${strVal.replace(/"/g, '""')}"`;
+                    }
+                    return strVal;
+                });
+                csvRows.push(values.join(','));
+            }
+            
+            const csvString = csvRows.join('\n');
+            const blob = new Blob([csvString], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            
+            const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+            a.setAttribute('hidden', '');
+            a.setAttribute('href', url);
+            a.setAttribute('download', `abyssal_selection_${timestamp}.csv`);
+            
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        });
+    }
+
     function setupChat() {
         const input = document.getElementById('chat-input');
         const btn = document.getElementById('chat-send');
@@ -466,10 +559,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         infoDiv.innerHTML = `
             <div class="stat-box">
-                 <div class="stat-row" style="border-bottom: 1px solid #8892b0; margin-bottom: 10px; padding-bottom: 5px;">
-                    <span class="stat-label"><strong>Column</strong></span>
-                    <span class="stat-value"><strong>Value</strong></span>
-                </div>
                 ${listItems}
             </div>
         `;
