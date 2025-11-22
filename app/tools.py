@@ -7,6 +7,37 @@ from typing import List, Dict, Any
 # Load data once for the tools
 DF = pd.read_csv('merged.csv')
 
+# Parse list columns from strings to actual lists
+list_columns = [
+    'hazard_type', 'hazard_severity', 'hazard_notes',
+    'life_species', 'life_avg_depth_m', 'life_density', 'life_threat_level', 
+    'life_behavior', 'life_trophic_level', 'life_prey_species',
+    'poi_id', 'poi_category', 'poi_label', 'poi_description', 'poi_research_value',
+    'resource_type', 'resource_family', 'resource_abundance', 'resource_purity', 
+    'resource_extraction_difficulty', 'resource_environmental_impact', 
+    'resource_economic_value', 'resource_description',
+    'coral_coral_cover_pct', 'coral_health_index', 'coral_bleaching_risk', 'coral_biodiversity_index',
+    'current_u_mps', 'current_v_mps', 'current_speed_mps', 'current_stability', 'current_flow_direction',
+    'biome_predators', 'biome_prey', 'biome_interaction_strengths'
+]
+
+def safe_parse_list(val):
+    """Safely parse a string representation of a list into an actual list."""
+    if pd.isna(val) or val == '':
+        return []
+    if isinstance(val, str):
+        try:
+            if val.startswith('[') and val.endswith(']'):
+                return ast.literal_eval(val)
+        except (ValueError, SyntaxError):
+            pass
+    return []
+
+# Parse all list columns
+for col in list_columns:
+    if col in DF.columns:
+        DF[col] = DF[col].apply(safe_parse_list)
+
 class HighlightTilesInput(BaseModel):
     tiles: List[Dict[str, int]] = Field(..., description="List of row/col dictionaries, e.g. [{'row': 1, 'col': 2}, ...]")
 
