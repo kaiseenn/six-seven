@@ -52,6 +52,13 @@ def initialize_agent():
     system_prompt = """You are an expert deep-sea data analyst assistant for the Abyssal World dataset. 
 
 You have access to a comprehensive merged dataset with the following columns:
+
+COLUMN DATA TYPES:
+- LIST columns (contain Python lists): hazard_type, hazard_severity, hazard_notes, life_species, life_avg_depth_m, life_density, life_threat_level, life_behavior, life_trophic_level, life_prey_species, poi_id, poi_category, poi_label, poi_description, poi_research_value, resource_type, resource_family, resource_abundance, resource_purity, resource_extraction_difficulty, resource_environmental_impact, resource_economic_value, resource_description, biome_predators, biome_prey, biome_interaction_strengths
+- NUMERIC columns (floats/ints): row, col, x_km, y_km, lat, lon, depth_m, pressure_atm, temperature_c, light_intensity, terrain_roughness, coral_coral_cover_pct, coral_health_index, coral_bleaching_risk, coral_biodiversity_index, current_u_mps, current_v_mps, current_speed_mps
+- STRING columns: biome, current_stability (values: "low", "medium", "high")
+
+DETAILED COLUMN DESCRIPTIONS:
 - row, col: Grid coordinates (0-49)
 - x_km, y_km: Position in kilometers
 - lat, lon: Geographic coordinates
@@ -111,13 +118,25 @@ Food Web Data:
 - biome_interaction_strengths: List of interaction strengths
 
 TOOLS AVAILABLE:
-1. query_data(code): Execute Python/Pandas code to query the 'df' DataFrame. Always assign results to a variable named 'result'.
-2. highlight_tiles(tiles): Highlight tiles on the map. Pass a list of dicts with 'row' and 'col' keys.
+1. query_data(code): Execute Python/Pandas code to analyze data and return information (strings, numbers, statistics).
+   - Assign result to variable 'result'
+   - Use for: counts, statistics, max/min values, general information
+   - Does NOT highlight tiles
+
+2. query_and_highlight(code): Execute Python/Pandas code to find tiles AND automatically highlight them.
+   - Assign result to variable 'result_rows' as list of {'row': X, 'col': Y} dicts
+   - Use for: "find top 5 richest tiles", "show all deep tiles", etc.
+   - Automatically highlights the results
+
+3. highlight_tiles(tiles): Manually highlight specific tiles on the map.
+   - Pass a list of dicts with 'row' and 'col' keys
+   - Use when you already have specific coordinates to highlight
 
 IMPORTANT NOTES:
 - List columns (like resource_economic_value, life_species, etc.) contain Python lists when multiple items exist for a cell
 - Use pandas operations to filter, sort, and analyze the data
-- When asked to highlight tiles, first query the data to get row/col coordinates, then use highlight_tiles
+- When user asks to "find" or "show" tiles, use query_and_highlight (it auto-highlights)
+- When user asks "how many" or wants statistics, use query_data (no highlighting)
 - Economic value is stored in resource_economic_value as a list of values"""
 
     agent = create_agent(
@@ -218,18 +237,90 @@ async def generate_response(user_message: str) -> AsyncGenerator[str, None]:
             
             for message in token.content_blocks:
                 msg_type = message.get("type")
+                node = metadata.get("langgraph_node")
             
-                if msg_type == "text" and metadata.get("langgraph_node") == "model":
+                if msg_type == "text" and node == "model":
                     yield json.dumps({"type": "text", "content": message["text"]}) + "\n"
+                    
                 elif msg_type == "tool_call":
-                    if message.get("name") == "highlight_tiles":
+                    tool_name = message.get("name", "unknown")
+                    # Show tool execution to user
+                    yield json.dumps({"type": "text", "content": f"[Executing {tool_name}...]"}) + "\n"
+                
+                elif msg_type == "text" and node == "tools":
+                    # Tool outputs come as text messages from the tools node
+                    content = message.get("text", "")
+                    print(f"[DEBUG] Tool output: {content[:150]}")
+                    
+                    # Check if this is a query_and_highlight result with HIGHLIGHT: prefix
+                    if isinstance(content, str) and content.startswith("HIGHLIGHT:"):
                         try:
-                            args = message.get("args", {})
-                            tiles = args.get("tiles", [])
-                            if tiles:
+                            # Extract the tiles list from "HIGHLIGHT:[{...}, {...}]"
+                            tiles_str = content[10:]  # Remove "HIGHLIGHT:" prefix
+                            tiles = ast.literal_eval(tiles_str)
+                            
+                            if isinstance(tiles, list) and len(tiles) > 0:
+                                # Send highlight command to frontend
                                 yield json.dumps({"type": "highlight", "tiles": tiles}) + "\n"
+                                # Send success message
+                                yield json.dumps({"type": "text", "content": f"✓ Highlighted {len(tiles)} tiles"}) + "\n"
+                            else:
+                                yield json.dumps({"type": "text", "content": "⚠ No tiles to highlight"}) + "\n"
                         except Exception as e:
-                            print(f"Error parsing tool call args: {e}")
+                            yield json.dumps({"type": "text", "content": f"⚠ Highlight error: {str(e)}"}) + "\n"
+                    
+                    # Show SUCCESS/ERROR messages from tools
+                    elif isinstance(content, str) and (content.startswith("SUCCESS:") or content.startswith("ERROR:")):
+                        yield json.dumps({"type": "text", "content": content}) + "\n"
+                    
+                    # For query_data tool (just show the result)
+                    elif content and not content.startswith("ERROR:") and not content.startswith("HIGHLIGHT:"):
+                        yield json.dumps({"type": "text", "content": f"📊 {content}"}) + "\n"
+                    
+                elif msg_type == "tool_output":
+                    # Handle tool outputs
+                    tool_name = message.get("name", "")
+                    content = message.get("content", "")
+                    
+                    # Check if this is a query_and_highlight result with HIGHLIGHT: prefix
+                    if isinstance(content, str) and content.startswith("HIGHLIGHT:"):
+                        try:
+                            # Extract the tiles list from "HIGHLIGHT:[{...}, {...}]"
+                            tiles_str = content[10:]  # Remove "HIGHLIGHT:" prefix
+                            tiles = ast.literal_eval(tiles_str)
+                            
+                            if isinstance(tiles, list) and len(tiles) > 0:
+                                # Send highlight command to frontend
+                                print("called")
+                                yield json.dumps({"type": "highlight", "tiles": tiles}) + "\n"
+                                # Send success message
+                                yield json.dumps({"type": "text", "content": f"✓ Highlighted {len(tiles)} tiles"}) + "\n"
+                            else:
+                                yield json.dumps({"type": "text", "content": "⚠ No tiles to highlight"}) + "\n"
+                        except Exception as e:
+                            yield json.dumps({"type": "text", "content": f"⚠ Highlight error: {str(e)}"}) + "\n"
+                    
+                    # Show SUCCESS/ERROR messages from tools
+                    elif isinstance(content, str) and (content.startswith("SUCCESS:") or content.startswith("ERROR:")):
+                        yield json.dumps({"type": "text", "content": content}) + "\n"
+                    
+                    # For highlight_tiles tool (manual highlighting)
+                    elif tool_name == "highlight_tiles":
+                        try:
+                            tiles = ast.literal_eval(content) if isinstance(content, str) else content
+                            if isinstance(tiles, list) and len(tiles) > 0:
+                                yield json.dumps({"type": "highlight", "tiles": tiles}) + "\n"
+                                yield json.dumps({"type": "text", "content": f"✓ Highlighted {len(tiles)} tiles"}) + "\n"
+                        except Exception as e:
+                            yield json.dumps({"type": "text", "content": f"⚠ Highlight error: {str(e)}"}) + "\n"
+                    
+                    # For query_data tool (just show the result)
+                    elif tool_name == "query_data":
+                        if content and not content.startswith("ERROR:"):
+                            yield json.dumps({"type": "text", "content": f"📊 {content}"}) + "\n"
+                        elif content.startswith("ERROR:"):
+                            yield json.dumps({"type": "text", "content": content}) + "\n"
+                            
     except Exception as e:
         yield json.dumps({"type": "text", "content": f"Error: {str(e)}"}) + "\n"
 

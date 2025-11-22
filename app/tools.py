@@ -8,6 +8,7 @@ from typing import List, Dict, Any
 DF = pd.read_csv('merged.csv')
 
 # Parse list columns from strings to actual lists
+# These columns contain stringified lists like "[item1, item2]"
 list_columns = [
     'hazard_type', 'hazard_severity', 'hazard_notes',
     'life_species', 'life_avg_depth_m', 'life_density', 'life_threat_level', 
@@ -16,10 +17,12 @@ list_columns = [
     'resource_type', 'resource_family', 'resource_abundance', 'resource_purity', 
     'resource_extraction_difficulty', 'resource_environmental_impact', 
     'resource_economic_value', 'resource_description',
-    'coral_coral_cover_pct', 'coral_health_index', 'coral_bleaching_risk', 'coral_biodiversity_index',
-    'current_u_mps', 'current_v_mps', 'current_speed_mps', 'current_stability', 'current_flow_direction',
     'biome_predators', 'biome_prey', 'biome_interaction_strengths'
 ]
+
+# Note: current_stability is a STRING (e.g., "low", "medium", "high")
+# Note: current_flow_direction is mostly empty
+# Note: coral_* and current_u/v/speed are NUMERIC, not lists
 
 def safe_parse_list(val):
     """Safely parse a string representation of a list into an actual list."""
@@ -64,37 +67,99 @@ def highlight_tiles(tiles: List[Dict[str, int]]):
     # Return the validated tiles as a string repr so the agent loop can capture it in the ToolMessage
     return str(validated_tiles)
 
-class PythonQueryInput(BaseModel):
-    code: str = Field(..., description="Python pandas code to execute. Variable 'df' is available. Must assign result to variable 'result_rows' as a list of dicts with BOTH 'row' AND 'col' keys: [{'row':..., 'col':...}].")
-
 @tool("query_data")
 def query_data(code: str):
     """
-    Executes Python code to query the 'df' pandas DataFrame. 
+    Executes Python code to query and analyze the 'df' pandas DataFrame.
+    Use this tool to get information, statistics, or answers WITHOUT highlighting tiles.
+    
     The dataframe 'df' has columns like: 'row', 'col', 'depth_m', 'biome', 'resource_economic_value', etc.
     
-    CRITICAL: You MUST assign the final result to a variable named 'result_rows'.
+    You MUST assign the final result to a variable named 'result'.
+    'result' can be a string, number, list, or any data you want to return to the user.
+    
+    Example code:
+    # Count tiles below certain depth
+    count = len(df[df['depth_m'] > 3000])
+    result = f"There are {count} tiles deeper than 3000m"
+    
+    # Find max depth
+    result = f"Maximum depth is {df['depth_m'].max()}m"
+    
+    # Get statistics
+    df['total_econ'] = df['resource_economic_value'].apply(lambda x: sum(x) if len(x) > 0 else 0)
+    result = f"Average economic value: {df['total_econ'].mean():.2f}"
+    """
+    local_vars = {'df': DF, 'pd': pd}
+    print(f"[query_data] Executing:\n{code}")
+    
+    try:
+        exec(code, {}, local_vars)
+        if 'result' not in local_vars:
+            return "ERROR: Code did not assign 'result' variable."
+        
+        result = local_vars['result']
+        return str(result)
+    except Exception as e:
+        return f"ERROR: {str(e)}"
+
+@tool("query_and_highlight")
+def query_and_highlight(code: str):
+    """
+    Executes Python code to query the 'df' DataFrame and AUTOMATICALLY highlights the resulting tiles.
+    Use this tool when you want to find AND highlight specific tiles on the map.
+    
+    The dataframe 'df' has columns like: 'row', 'col', 'depth_m', 'biome', 'resource_economic_value', etc.
+    
+    You MUST assign the final result to a variable named 'result_rows'.
     'result_rows' MUST be a list of dictionaries with BOTH 'row' AND 'col' keys.
     Example: [{'row': 1, 'col': 2}, {'row': 3, 'col': 4}]
     
-    ALWAYS select BOTH 'row' AND 'col' columns in your result.
+    The tiles will be AUTOMATICALLY highlighted. You only need to return the row/col pairs.
     
     Example code:
-    # Calculate total economic value
+    # Find top 5 richest tiles
     df['total_econ'] = df['resource_economic_value'].apply(lambda x: sum(x) if len(x) > 0 else 0)
-    # Get top 5
     top_5 = df.nlargest(5, 'total_econ')
-    # MUST include both row and col
     result_rows = top_5[['row', 'col']].to_dict('records')
+    
+    # Find all tiles deeper than 3000m
+    deep_tiles = df[df['depth_m'] > 3000]
+    result_rows = deep_tiles[['row', 'col']].to_dict('records')
     """
-    local_vars = {'df': DF}
-    print(code)
+    local_vars = {'df': DF, 'pd': pd}
+    print(f"[query_and_highlight] Executing:\n{code}")
+    
     try:
         exec(code, {}, local_vars)
-        if 'result_rows' in local_vars:
-            return local_vars['result_rows']
-        return "Error: Code did not assign 'result_rows' variable."
+        
+        if 'result_rows' not in local_vars:
+            return "ERROR: Code did not assign 'result_rows' variable."
+        
+        result_rows = local_vars['result_rows']
+        
+        if not isinstance(result_rows, list):
+            return f"ERROR: result_rows must be a list, got {type(result_rows).__name__}"
+        
+        if len(result_rows) == 0:
+            return "SUCCESS: Query executed but returned 0 tiles (nothing to highlight)"
+        
+        # Validate each tile has row and col
+        validated_tiles = []
+        for tile in result_rows:
+            if isinstance(tile, dict) and 'row' in tile and 'col' in tile:
+                try:
+                    validated_tiles.append({'row': int(tile['row']), 'col': int(tile['col'])})
+                except (ValueError, TypeError):
+                    pass
+        
+        if len(validated_tiles) == 0:
+            return f"ERROR: No valid tiles. Each tile must have 'row' and 'col' keys. Got: {result_rows[:3]}"
+        
+        # Return special format that main.py will parse for highlighting
+        return f"HIGHLIGHT:{str(validated_tiles)}"
+        
     except Exception as e:
-        return f"Execution Error: {e}"
+        return f"ERROR: {str(e)}"
 
-TOOLS = [query_data, highlight_tiles]
+TOOLS = [query_data, query_and_highlight, highlight_tiles]
